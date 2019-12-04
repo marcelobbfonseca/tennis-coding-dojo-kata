@@ -88,6 +88,7 @@ def ball_movement(score_a, score_b):
         ball.goto(0, 0)
         ball.dx *= -1
         score_a += 1
+        pen.clear()
         board = 'Player A:{}   Player B:{}'.format(score_a, score_b)
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 
@@ -95,6 +96,7 @@ def ball_movement(score_a, score_b):
         ball.goto(0, 0)
         ball.dx *= -1
         score_b += 1
+        pen.clear()
         board = 'Player A:{}   Player B:{}'.format(score_a, score_b)
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 def paddle_collision():
@@ -120,6 +122,8 @@ wn.onkeypress(paddle_a_down, 's')
 wn.onkeypress(paddle_b_up, 'Up')
 wn.onkeypress(paddle_b_down, 'Down')
 
+# TODO Game over condition
+# TODO add Sound
 
 # Main game loop
 while True:
