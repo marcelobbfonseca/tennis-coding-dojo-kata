@@ -4,9 +4,9 @@ class Paddle:
     
     def __init__(self, player):
         if player == 'player 1':
-            position_x = 350
-        elif player == 'player 2':
             position_x = -350
+        elif player == 'player 2':
+            position_x = 350
         else:
             raise ValueError("Specify player 1 or 2")
         

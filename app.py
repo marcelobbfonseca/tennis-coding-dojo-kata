@@ -72,13 +72,13 @@ def ball_movement():
 def paddle_collision():
     # Paddle B collision
     if  ball.xcor() > 340 and ball.xcor() < 350:
-        if ball.ycor() < player_1.paddle.ycor() + 40 and  ball.ycor() > player_1.paddle.ycor() - 40:
+        if ball.ycor() < player_2.paddle.ycor() + 40 and  ball.ycor() > player_2.paddle.ycor() - 40:
             ball.setx(340)
             ball.dx *= -1
     
     # Paddle A collision
     if  ball.xcor() < -340 and ball.xcor() > -350:
-        if ball.ycor() < player_2.paddle.ycor() + 40 and  ball.ycor() > player_2.paddle.ycor() - 40:
+        if ball.ycor() < player_1.paddle.ycor() + 40 and  ball.ycor() > player_1.paddle.ycor() - 40:
             ball.setx(-340)
             ball.dx *= -1    
 
