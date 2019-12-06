@@ -4,7 +4,9 @@ import random
 from player import Paddle
 
 
-def setup(wn):
+def setup():
+    wn = turtle.Screen()
+
     wn.title("Tennis Pong")
     wn.bgcolor("black")
     wn.setup(width=800, height=600)
@@ -41,7 +43,7 @@ def setup(wn):
 
     wn.onkeypress(player_2.up, 'Up')
     wn.onkeypress(player_2.down, 'Down')
-    return ball, pen, player_1, player_2
+    return ball, pen, player_1, player_2, wn
 
 
 
@@ -92,8 +94,8 @@ def paddle_collision(ball, player_1, player_2):
 # TODO add Sound
 
 def main():
-    wn = turtle.Screen()
-    ball, pen, p1, p2 = setup(wn)
+    ball, pen, p1, p2, wn = setup()
+    
     # Main game loop
     while True:
         wn.update()
