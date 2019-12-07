@@ -3,6 +3,35 @@ import os
 import random
 from player import Paddle
 
+class Tennis:
+                #   0   1   2   3   4           5
+    POINT_SYSTEM = [0, 15, 30, 40, 'Advantage', 'Winner']
+    GAME_OVER = False
+
+
+    @staticmethod
+    def to_score(scorer, other):
+        # already won
+        if scorer.score == 5:
+            return
+
+        if is_deuce(scorer, other):
+            scorer.score = 4
+            return 
+        
+        adv, adv_player = has_advantage(scorer, other)
+        if adv:
+            if adv_player == scorer.name:
+                scorer.score = 5 # winner!
+                Tennis.GAME_OVER = True
+            else: # back to deuce
+                other.score = 3
+        elif scorer.score == 3 and other.score <=2:
+            scorer.score = 5 # winner!
+            Tennis.GAME_OVER = True
+        else: 
+            scorer.score +=1
+        
 
 def setup():
     wn = turtle.Screen()
@@ -65,7 +94,7 @@ def ball_movement(ball, pen, player_1, player_2):
         ball.dx *= -1
         player_1.score += 1
         pen.clear()
-        board = 'Player A:{}   Player B:{}'.format(player_1.score, player_2.score)
+        board = 'Player A:{}   Player B:{}'.format(Tennis.POINT_SYSTEM[player_1.score], Tennis.POINT_SYSTEM[player_2.score])
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 
     if ball.xcor() < -390:
@@ -73,7 +102,7 @@ def ball_movement(ball, pen, player_1, player_2):
         ball.dx *= -1
         player_2.score += 1
         pen.clear()
-        board = 'Player A:{}   Player B:{}'.format(player_1.score, player_2.score)
+        board = 'Player A:{}   Player B:{}'.format(Tennis.POINT_SYSTEM[player_1.score], Tennis.POINT_SYSTEM[player_2.score])
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 
 def paddle_collision(ball, player_1, player_2):
@@ -89,15 +118,27 @@ def paddle_collision(ball, player_1, player_2):
             ball.setx(-340)
             ball.dx *= -1    
 
+def is_deuce(player_1, player_2):
+    if(player_1.score == 3 and player_2.score == 3):
+        return True
+    else:
+        return False
 
-# TODO Game over condition
-# TODO add Sound
+def has_advantage(player_1, player_2):
+    if(player_1.score == 3 and player_2.score == 4):
+        advantage = True, player_2.name
+    elif(player_1.score == 4 and player_2.score == 3):
+        advantage = True, player_1.name
+    else:
+        advantage = False, None
+    return advantage
+
 
 def main():
     ball, pen, p1, p2, wn = setup()
     
     # Main game loop
-    while True:
+    while Tennis.GAME_OVER == False:
         wn.update()
         ball_movement(ball, pen, p1, p2)
         paddle_collision(ball, p1, p2)

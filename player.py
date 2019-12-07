@@ -1,6 +1,7 @@
 import turtle
 
 class Paddle:
+
     
     def __init__(self, player):
         if player == 'player 1':
@@ -8,8 +9,10 @@ class Paddle:
         elif player == 'player 2':
             position_x = 350
         else:
-            raise ValueError("Specify player 1 or 2")
-        
+            raise ValueError("Required argument 'player 1' or 'player 2.'")
+
+
+        self.name = player
         self.score = 0
         self.paddle = turtle.Turtle()
         self.paddle.speed(0)
@@ -28,3 +31,6 @@ class Paddle:
         y = self.paddle.ycor()
         y -= 20
         self.paddle.sety(y)  
+
+    def to_score(self):
+        pass
