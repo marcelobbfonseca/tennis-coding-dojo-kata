@@ -28,3 +28,7 @@ class Paddle:
         y = self.paddle.ycor()
         y -= 20
         self.paddle.sety(y)  
+
+    def pontuar(self):
+        self.score += 1
+    

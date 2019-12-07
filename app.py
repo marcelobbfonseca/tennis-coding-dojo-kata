@@ -61,17 +61,17 @@ def ball_movement(ball, pen, player_1, player_2):
     if ball.xcor() > 390:
         ball.goto(0, 0)
         ball.dx *= -1
-        player_1.score += 1
+        to_score (player_1, player_2)
         pen.clear()
-        board = 'Player A:{}   Player B:{}'.format(player_1.score, player_2.score)
+        board = 'Player A:{}   Player B:{}'.format(TennisGame.SCORE_SYSTEM[player_1.score], TennisGame.SCORE_SYSTEM[player_2.score])
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx *= -1
-        player_2.score += 1
+        to_score (player_2, player_1)
         pen.clear()
-        board = 'Player A:{}   Player B:{}'.format(player_1.score, player_2.score)
+        board = 'Player A:{}   Player B:{}'.format(TennisGame.SCORE_SYSTEM[player_1.score], TennisGame.SCORE_SYSTEM[player_2.score])
         pen.write(board, align='center', font=('Courie', 24, 'normal'))
 
 def paddle_collision(ball, player_1, player_2):
@@ -87,9 +87,27 @@ def paddle_collision(ball, player_1, player_2):
             ball.setx(-340)
             ball.dx *= -1    
 
+class TennisGame:
+                #   0   1   2   3   4           5       6
+    SCORE_SYSTEM = [0, 15, 30, 40, 'Advantage', 'win', 'lose']
 
-# TODO Game over condition
-# TODO add Sound
+def is_duece(player1, player2):
+    if player1.score == 3 and player2.score == 3:
+        return True    
+    return False
+
+def to_score(scorer, other):
+    if is_duece(scorer, other):
+        scorer.score += 1
+    elif scorer.score == 3 and other.score == 4:
+        other.score = 3
+    elif scorer.score == 4:
+        scorer.score = 5
+        other.score = 6
+    elif scorer.score == 3 and other.score <= 2:
+        scorer.score = 5
+    else: 
+        scorer.score = scorer.score +1
 
 def main():
     wn = turtle.Screen()
@@ -104,8 +122,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
+    
 
 
 
